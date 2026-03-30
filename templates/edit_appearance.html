@@ -124,7 +124,7 @@
         .form-group input[type="color"]:focus,
         .form-group select:focus {
             outline: none;
-            border-color: {{ site_appearance.primary_color }};
+            border-color: var(--primary-color, #3b82f6);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
             transform: translateY(-1px);
         }
@@ -132,6 +132,7 @@
         .form-group input[type="color"] {
             height: 50px;
             cursor: pointer;
+            padding: 0.2rem;
         }
 
         .field-errors {
@@ -164,25 +165,6 @@
 
         .form-actions .btn {
             min-width: 180px;
-        }
-
-        /* Color Preview */
-        .form-group:has(input[type="color"]) {
-            position: relative;
-        }
-
-        .form-group:has(input[type="color"])::after {
-            content: '';
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary-color, #3b82f6);
-            border: 2px solid #e2e8f0;
-            pointer-events: none;
         }
 
         /* Responsive Design */
