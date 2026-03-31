@@ -13,7 +13,7 @@ class TeamMember(models.Model):
 
 
 class SiteAppearance(models.Model):
-    site_title = models.CharField(max_length=100, default='Website Kelompok')
+    site_title = models.CharField(max_length=100, default='MAKARA')
     primary_color = models.CharField(max_length=20, default='#2563eb')
     background_color = models.CharField(max_length=20, default='#f8fafc')
     font_family = models.CharField(max_length=100, default='Inter')

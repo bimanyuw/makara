@@ -17,5 +17,5 @@ class AppearanceForm(forms.ModelForm):
                 ('Times New Roman', 'Times New Roman (Formal)'),
                 ('Courier New', 'Courier New (Monospace)'),
             ]),
-            'site_title': forms.TextInput(attrs={'placeholder': 'Website Kelompok'}),
+            'site_title': forms.TextInput(attrs={'placeholder': 'MAKARA'}),
         }

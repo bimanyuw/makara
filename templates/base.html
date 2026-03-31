@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ site_appearance.site_title|default:"Website Kelompok" }}{% endblock %}</title>
+    <title>{% block title %}{{ site_appearance.site_title|default:"MAKARA" }}{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -250,9 +250,9 @@
     <nav class="navbar">
         <div class="navbar-inner">
             <a href="/" class="brand">
-                <div class="brand-icon">K</div>
+                <img src="{% static 'logo-fasilkom.png' %}" alt="Logo Fasilkom" style="width: 36px; height: 36px; object-fit: contain; flex-shrink: 0;">
                 <div>
-                    <div class="brand-name">{{ site_appearance.site_title|default:"Website Kelompok" }}</div>
+                    <div class="brand-name">{{ site_appearance.site_title|default:"MAKARA" }}</div>
                     <div class="brand-sub">Pengantar Keamanan Perangkat Lunak</div>
                 </div>
             </a>

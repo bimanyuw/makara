@@ -183,7 +183,7 @@
         <div class="hero-actions">
             {% if can_edit %}
                 <a href="{% url 'edit_appearance' %}" class="btn btn-primary">
-                    🎨 Ubah Tampilan Website
+                    Ubah Tampilan Website
                 </a>
             {% endif %}
         </div>
@@ -234,7 +234,6 @@
 <!-- Login prompt (for guests) -->
 {% if not user.is_authenticated %}
 <div class="login-card">
-    <div class="lock-icon">🔐</div>
     <h2>Login Anggota Kelompok</h2>
     <p>Anggota kelompok yang sudah login via Google dapat mengubah tampilan website (warna & font).</p>
     <a href="/accounts/google/login/?process=login" class="btn btn-google" style="display:inline-flex;">
