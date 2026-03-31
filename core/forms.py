@@ -10,10 +10,12 @@ class AppearanceForm(forms.ModelForm):
             'primary_color': forms.TextInput(attrs={'type': 'color'}),
             'background_color': forms.TextInput(attrs={'type': 'color'}),
             'font_family': forms.Select(choices=[
-                ('Arial', 'Arial'),
-                ('Georgia', 'Georgia'),
-                ('Tahoma', 'Tahoma'),
-                ('Verdana', 'Verdana'),
-                ('Times New Roman', 'Times New Roman'),
-            ])
+                ('Plus Jakarta Sans', 'Plus Jakarta Sans (Modern)'),
+                ('Georgia', 'Georgia (Serif Klasik)'),
+                ('Verdana', 'Verdana (Sans-serif Bersih)'),
+                ('Tahoma', 'Tahoma (Kompak)'),
+                ('Times New Roman', 'Times New Roman (Formal)'),
+                ('Courier New', 'Courier New (Monospace)'),
+            ]),
+            'site_title': forms.TextInput(attrs={'placeholder': 'Website Kelompok'}),
         }

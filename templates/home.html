@@ -1,109 +1,252 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<div class="card">
-    <h1>Biodata Kelompok</h1>
-    <p>Halaman ini menampilkan biodata anggota kelompok dan dapat diakses tanpa login.</p>
-
-    {% if can_edit %}
-        <a href="{% url 'edit_appearance' %}" class="btn">Ubah Tampilan Website</a>
-    {% endif %}
-</div>
-
-<div class="section-title">
-    <h2>Daftar Anggota</h2>
-</div>
-
-<div class="members-grid">
-    {% for member in members %}
-        <div class="card member-card">
-            <div class="member-top">
-                {% if member.photo %}
-                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
-                {% else %}
-                    <div class="member-placeholder">{{ member.name|first|upper }}</div>
-                {% endif %}
-            </div>
-
-            <h3>{{ member.name }}</h3>
-
-            <div class="member-info">
-                <p><strong>Peran:</strong> {{ member.role }}</p>
-                <p><strong>NPM:</strong> {{ member.npm }}</p>
-                {% if member.bio %}
-                    <p><strong>Bio:</strong> {{ member.bio }}</p>
-                {% endif %}
-            </div>
-        </div>
-    {% empty %}
-        <div class="card">
-            <p>Belum ada data anggota.</p>
-        </div>
-    {% endfor %}
-</div>
-
-{% if not user.is_authenticated %}
-<div class="card">
-    <h2>Login</h2>
-    <p>Silakan login dengan Google jika Anda merupakan anggota kelompok yang memiliki hak untuk mengubah tampilan website.</p>
-    <a href="/accounts/google/login/" class="btn">Login dengan Google</a>
-</div>
-{% endif %}
-
+{% block extra_style %}
 <style>
-    .section-title {
-        margin: 24px 0 16px;
+    /* ── Hero ─────────────────────────────────────── */
+    .hero {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 40px 36px;
+        margin-bottom: 32px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        box-shadow: var(--shadow);
+    }
+    .hero-text h1 { margin-bottom: 10px; }
+    .hero-text p  { font-size: 1rem; max-width: 560px; }
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: color-mix(in srgb, var(--primary) 10%, transparent);
+        color: var(--primary);
+        border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+        border-radius: 50px;
+        padding: 5px 14px;
+        font-size: .8rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+    }
+    .hero-badge::before { content: '●'; font-size: .6rem; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+    /* ── Section header ──────────────────────────── */
+    .section-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+    }
+    .section-header h2 { margin: 0; }
+    .member-count {
+        background: var(--surface-2);
+        border: 1px solid var(--border);
+        border-radius: 50px;
+        padding: 3px 12px;
+        font-size: .8rem;
+        font-weight: 600;
+        color: var(--text-muted);
     }
 
+    /* ── Member grid ─────────────────────────────── */
     .members-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         gap: 20px;
     }
 
     .member-card {
-        text-align: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        transition: transform .2s, box-shadow .2s;
     }
-
-    .member-top {
-        margin-bottom: 16px;
+    .member-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
     }
+    .member-card-top {
+        height: 80px;
+        background: linear-gradient(135deg,
+            color-mix(in srgb, var(--primary) 85%, #000),
+            color-mix(in srgb, var(--primary) 55%, #6366f1));
+    }
+    .member-card-body { padding: 0 20px 24px; }
 
+    .member-avatar-wrap {
+        margin-top: -32px;
+        margin-bottom: 14px;
+    }
     .member-photo,
-    .member-placeholder {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
+    .member-initials {
+        width: 64px; height: 64px;
         border-radius: 50%;
+        border: 3px solid var(--surface);
+        box-shadow: 0 2px 8px rgba(0,0,0,.12);
     }
-
-    .member-photo {
-        object-fit: cover;
-        border: 3px solid #dbeafe;
-    }
-
-    .member-placeholder {
+    .member-photo { object-fit: cover; display: block; }
+    .member-initials {
+        background: var(--primary);
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 800;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #2563eb;
-        color: #ffffff;
+    }
+
+    .member-name { font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+    .member-role {
+        font-size: .8rem;
+        color: var(--primary);
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+    .member-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding-top: 12px;
+        border-top: 1px solid var(--border);
+    }
+    .member-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: .82rem;
+    }
+    .meta-label {
+        color: var(--text-muted);
+        font-weight: 500;
+        width: 36px;
+        flex-shrink: 0;
+    }
+    .meta-value { color: var(--text); font-weight: 600; }
+    .member-bio {
+        margin-top: 10px;
+        font-size: .82rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        font-style: italic;
+    }
+
+    /* ── Login card ──────────────────────────────── */
+    .login-card {
+        margin-top: 32px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 32px;
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+    .login-card .lock-icon {
         font-size: 2rem;
-        font-weight: 700;
+        margin-bottom: 12px;
     }
+    .login-card h2 { margin-bottom: 8px; }
+    .login-card p  { margin-bottom: 20px; max-width: 400px; margin-left: auto; margin-right: auto; }
 
-    .member-info {
-        text-align: left;
-        margin-top: 14px;
+    /* ── Empty state ─────────────────────────────── */
+    .empty-state {
+        text-align: center;
+        padding: 48px 24px;
+        color: var(--text-muted);
     }
+    .empty-state p { font-size: 1rem; }
 
-    .member-info p {
-        margin-bottom: 8px;
-        color: #475569;
+    @media (max-width: 640px) {
+        .hero { flex-direction: column; padding: 24px 20px; }
+        .members-grid { grid-template-columns: 1fr 1fr; }
     }
-
-    .member-info strong {
-        color: #0f172a;
+    @media (max-width: 420px) {
+        .members-grid { grid-template-columns: 1fr; }
     }
 </style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="hero">
+    <div class="hero-text">
+        <div class="hero-badge">Pengantar Keamanan Perangkat Lunak · Genap 2025/2026</div>
+        <h1>Biodata Kelompok</h1>
+        <p>Halaman ini menampilkan biodata anggota kelompok dan dapat diakses publik tanpa perlu login.</p>
+        <div class="hero-actions">
+            {% if can_edit %}
+                <a href="{% url 'edit_appearance' %}" class="btn btn-primary">
+                    🎨 Ubah Tampilan Website
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Member list -->
+<div class="section-header">
+    <h2>Daftar Anggota</h2>
+    <span class="member-count">{{ members.count }} anggota</span>
+</div>
+
+<div class="members-grid">
+    {% for member in members %}
+    <div class="member-card">
+        <div class="member-card-top"></div>
+        <div class="member-card-body">
+            <div class="member-avatar-wrap">
+                {% if member.photo %}
+                    <img src="{{ member.photo.url }}" alt="{{ member.name }}" class="member-photo">
+                {% else %}
+                    <div class="member-initials">{{ member.name|first|upper }}</div>
+                {% endif %}
+            </div>
+
+            <div class="member-name">{{ member.name }}</div>
+            <div class="member-role">{{ member.role }}</div>
+
+            <div class="member-meta">
+                <div class="member-meta-row">
+                    <span class="meta-label">NPM</span>
+                    <span class="meta-value">{{ member.npm }}</span>
+                </div>
+            </div>
+
+            {% if member.bio %}
+                <p class="member-bio">"{{ member.bio }}"</p>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state" style="grid-column: 1/-1;">
+        <p>Belum ada data anggota. Tambahkan melalui halaman Admin Django.</p>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Login prompt (for guests) -->
+{% if not user.is_authenticated %}
+<div class="login-card">
+    <div class="lock-icon">🔐</div>
+    <h2>Login Anggota Kelompok</h2>
+    <p>Anggota kelompok yang sudah login via Google dapat mengubah tampilan website (warna & font).</p>
+    <a href="/accounts/google/login/?process=login" class="btn btn-google" style="display:inline-flex;">
+        <svg width="18" height="18" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+        </svg>
+        Login dengan Google
+    </a>
+</div>
+{% endif %}
+
 {% endblock %}
