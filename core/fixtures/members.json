@@ -34,7 +34,7 @@
   },
   {
     "model": "core.teammember",
-    "pk": 2,
+    "pk": 4,
     "fields": {
       "name": "Febrian Abimanyu Wijanarko",
       "npm": "2406397984",
@@ -45,7 +45,7 @@
   },
   {
     "model": "core.teammember",
-    "pk": 2,
+    "pk": 5,
     "fields": {
       "name": "Rheina Adinda Morani Sinurat",
       "npm": "2406435881",
