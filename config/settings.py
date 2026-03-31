@@ -20,13 +20,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # django-allauth
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  # <-- INI YANG HILANG
+    'allauth.socialaccount.providers.google', 
 
     'core',
 ]
@@ -56,7 +54,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'core.context_processors.site_settings',  # <-- INI YANG HILANG
+                'core.context_processors.site_settings', 
             ],
         },
     },
@@ -91,9 +89,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ============================================================
-# django-allauth configuration
-# ============================================================
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
@@ -118,14 +113,10 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
-# ============================================================
-# Authorization: daftar email anggota kelompok yang boleh edit
-# ============================================================
 ALLOWED_EDITOR_EMAILS = [
-    # Ganti dengan email Google anggota kelompok Anda
-    'anggota1@gmail.com',
-    'anggota2@gmail.com',
-    'anggota3@gmail.com',
-    'anggota4@gmail.com',
-    'anggota5@gmail.com',
+    'f.abimanyuwijanarko@gmail.com',
+    'adryanrasyad@gmail.com',
+    'khayratazkiya16@gmail.com',
+    'a.artanti2905@gmail.com',
+    'moranisinurat@gmail.com',
 ]
