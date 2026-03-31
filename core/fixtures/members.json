@@ -1,0 +1,57 @@
+[
+  {
+    "model": "core.teammember",
+    "pk": 1,
+    "fields": {
+      "name": "Khayra Tazkiya",
+      "npm": "2406428876",
+      "role": "Ketua",
+      "bio": "",
+      "photo": ""
+    }
+  },
+  {
+    "model": "core.teammember",
+    "pk": 2,
+    "fields": {
+      "name": "Adryan Muhammad Rasyad",
+      "npm": "2406430451",
+      "role": "Anggota",
+      "bio": "",
+      "photo": ""
+    }
+  },
+  {
+    "model": "core.teammember",
+    "pk": 3,
+    "fields": {
+      "name": "Alia Artanti",
+      "npm": "2406434925",
+      "role": "Anggota",
+      "bio": "",
+      "photo": ""
+    }
+  }
+  {
+    "model": "core.teammember",
+    "pk": 2,
+    "fields": {
+      "name": "Febrian Abimanyu Wijanarko",
+      "npm": "2406397984",
+      "role": "Anggota",
+      "bio": "",
+      "photo": ""
+    }
+  },
+  {
+    "model": "core.teammember",
+    "pk": 2,
+    "fields": {
+      "name": "Rheina Adinda Morani Sinurat",
+      "npm": "2406435881",
+      "role": "Anggota",
+      "bio": "",
+      "photo": ""
+    }
+  },
+]

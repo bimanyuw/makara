@@ -2,6 +2,9 @@
 Django settings for config project.
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from pathlib import Path
 import os
 
