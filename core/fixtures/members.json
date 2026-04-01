@@ -3,8 +3,8 @@
     "model": "core.teammember",
     "pk": 1,
     "fields": {
-      "name": "Khayra Tazkiya",
-      "npm": "2406428876",
+      "name": "Adryan Muhammad Rasyad",
+      "npm": "2406430451",
       "role": "Ketua",
       "bio": "",
       "photo": ""
@@ -14,8 +14,8 @@
     "model": "core.teammember",
     "pk": 2,
     "fields": {
-      "name": "Adryan Muhammad Rasyad",
-      "npm": "2406430451",
+      "name": "Khayra Tazkiya",
+      "npm": "2406428876",
       "role": "Anggota",
       "bio": "",
       "photo": ""
